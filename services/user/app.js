@@ -6,7 +6,7 @@ const app = express();
 const routes = require('./routes');
 
 const server = '127.0.0.1:27017';
-const database = 'freshfoods';
+const database = 'food_user';
 
 
 app.use(bodyParser.json());
@@ -22,6 +22,6 @@ mongoose.connect(`mongodb://${server}/${database}`, { useNewUrlParser: true } )
         console.error('Database connection error', err);
     });
 
-app.listen(3000, function () {
-    console.log('listening http://localhost:3005');
+app.listen(3001, function () {
+    console.log('listening http://localhost:3001');
 });

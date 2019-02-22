@@ -1,25 +1,31 @@
 const router = require('express').Router();
 
-const RestaurantController = require('./restaurant/controller');
-const DishController = require('./dishes/controller');
-const AuthController = require('./auth/controller');
-
-router.post('/login', AuthController.login);
-
-router.post('/register', AuthController.register);
+const { RestaurantController, DishesController }= require('./controller');
+const request = require('request');
 
 // Verify token for all other endpoint
-router.use(AuthController.verifyToken);
+router.use((req, res, next) => {
+    request.get('http://localhost:3001/token' + req.headers.token)
+        .then((result) => {
+            if (result.user) {
+                req.user = user;
+                next();
+            }
+            res.status(401).send('Auth error');
+        })
+        .catch((err) => {
+            res.status(500).send({
+                message: 'Token validation error',
+                err
+            });
+        });
+});
 
-router.get('/restaurants', RestaurantController.listRestaurants);
+router.get('/dishes/:restaurantId', RestaurantController.getRestaurantWithDishes);
+router.post('/dishes/:restaurantId/', DishesController.createDish);
 
-router.post('/restaurants', RestaurantController.createRestaurant);
-
-router.put('/restaurants', RestaurantController.updateRatingForRestaurant);
-
-
-router.get('/restaurants/:restaurantId', RestaurantController.getRestaurantWithDishes);
-
-router.post('/restaurants/:restaurantId/dishes', DishController.createDish);
+router.get('/list', RestaurantController.listRestaurants);
+router.post('/', RestaurantController.createRestaurant);
+router.put('/', RestaurantController.updateRatingForRestaurant);
 
 module.exports = router;

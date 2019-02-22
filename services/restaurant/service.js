@@ -1,5 +1,4 @@
-const RestaurantModel = require('./model');
-const DishService = require('../dishes/service');
+const { RestaurantModel, DishesModel } = require('./model');
 
 class RestaurantService {
     static listRestaurant(query) {
@@ -53,4 +52,26 @@ class RestaurantService {
     }
 }
 
-module.exports = RestaurantService;
+class DishService {
+    static addDishForRestaurant(restaurantId, newDishInfo) {
+        console.log(restaurantId, newDishInfo);
+
+        const res = new DishesModel({
+            name: newDishInfo.name,
+            type: newDishInfo.type,
+            restaurantId
+        });
+
+        return res.save();
+    }
+
+    static getDishes(restaurantId) {
+        return DishesModel.find({
+            restaurantId
+        });
+    }
+}
+module.exports = {
+    RestaurantService,
+    DishService
+};

@@ -22,6 +22,6 @@ mongoose.connect(`mongodb://${server}/${database}`, { useNewUrlParser: true } )
         console.error('Database connection error', err);
     });
 
-app.listen(3003, function () {
-    console.log('listening http://localhost:3005');
+app.listen(3002, function () {
+    console.log('listening http://localhost:3002');
 });
