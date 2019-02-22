@@ -3,10 +3,10 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 
 const app = express();
-const routes = require('./lib/routes');
+const routes = require('./routes');
 
-const server = '127.0.0.1:27017'; // REPLACE WITH YOUR DB SERVER
-const database = 'freshfoods';      // REPLACE WITH YOUR DB NAME
+const server = '127.0.0.1:27017';
+const database = 'freshfoods';
 
 
 app.use(bodyParser.json());
@@ -22,6 +22,6 @@ mongoose.connect(`mongodb://${server}/${database}`, { useNewUrlParser: true } )
         console.error('Database connection error', err);
     });
 
-app.listen(3005, function () {
+app.listen(3000, function () {
     console.log('listening http://localhost:3005');
 });
