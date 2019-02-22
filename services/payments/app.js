@@ -23,5 +23,5 @@ mongoose.connect(`mongodb://${server}/${database}`, { useNewUrlParser: true } )
     });
 
 app.listen(3004, function () {
-    console.log('listening http://localhost:3005');
+    console.log('listening http://localhost:3004');
 });
