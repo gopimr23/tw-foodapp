@@ -15,6 +15,14 @@ const secret = "FoodHubSecret";
 
 class Auth {
     static login(req, res) {
+        console.log({
+            serviceName: 'user-service',
+            time: new Date().toISOString(),
+            traceId: req.headers.traceId,
+            spanId: req.headers.spanId,
+            message: 'login'
+        });
+
         UserModel.findOne({ 'email' :  req.body.email },
             function(err, user) {
                 if (err)
@@ -52,6 +60,14 @@ class Auth {
     }
 
     static register(req, res) {
+        console.log({
+            serviceName: 'user-service',
+            time: new Date().toISOString(),
+            traceId: req.headers.traceId,
+            spanId: req.headers.spanId,
+            message: 'signup'
+        });
+
         User.findOne({'email': email},function(err, user) {
             // In case of any error return
             if (err){
@@ -91,6 +107,14 @@ class Auth {
     }
 
     static verifyToken(req, res, next) {
+        console.log({
+            serviceName: 'user-service',
+            time: new Date().toISOString(),
+            traceId: req.headers.traceId,
+            spanId: req.headers.spanId,
+            message: 'verify token'
+        });
+
         jwt.verify(req.headers.token, secret, function(err, decoded) {
             if (err) {
                 return res.json({ success: false, message: 'Failed to authenticate token.' });

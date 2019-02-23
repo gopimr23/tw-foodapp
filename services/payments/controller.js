@@ -1,12 +1,18 @@
-function mockBankAPICall() {
-    return Promise.resolve();
-}
-
 class paymentController {
     static payForTheOrder(req, res) {
         // call SBI or some back service
+        console.log({
+            serviceName: 'payment-service',
+            time: new Date().toISOString(),
+            traceId: req.headers.traceId,
+            fromSpanId: req.headers.spanId,
+            message: 'start payment'
+        });
 
         mockBankAPICall(req)
+            .then(() => {
+                return callPaymentService();
+            })
             .then(() => {
                 res.status(200).send({
                     message: "order success"
@@ -20,4 +26,9 @@ class paymentController {
             });
     }
 }
+
+function mockBankAPICall() {
+    return Promise.resolve();
+}
+
 module.exports = paymentController;

@@ -15,7 +15,10 @@ const OrderSchema = new mongoose.Schema({
     paymentType: String,
     time: Date,
     userId: mongoose.Schema.Types.ObjectId,
-    price: Number
+    price: Number,
+    date: Date,
+    deliveryFee: Number,
+    couponId: String
 });
 
 module.exports = mongoose.model('orders', OrderSchema);

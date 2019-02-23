@@ -11,7 +11,13 @@ const RestaurantSchema = new mongoose.Schema({
         userId: String,
         rating: Number
     }],
-    restaurantImgUrl: String
+    restaurantImgUrl: String,
+    address: {
+        doorNo: Number,
+        street: String,
+        city: String,
+        country: String
+    }
 });
 
 const DishesSchema = new mongoose.Schema({

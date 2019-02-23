@@ -3,10 +3,25 @@ const router = require('express').Router();
 const { RestaurantController, DishesController }= require('./controller');
 const request = require('request');
 
+
+function promiseRequest(params) {
+    return new Promise((resolve, reject) => {
+        request(params, function (err, data) {
+            if(err) {
+                reject(err);
+            } else {
+                resolve(data);
+            }
+        })
+    });
+}
+
 // Verify token for all other endpoint
 router.use((req, res, next) => {
-    request.get('http://localhost:3001/token' + req.headers.token)
-        .then((result) => {
+    promiseRequest({
+        method: 'GET',
+        url: 'http://localhost:3001/token' + req.headers.token
+    }).then((result) => {
             if (result.user) {
                 req.user = user;
                 next();
